@@ -7,7 +7,14 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+scapy = "^2.5.0"
+jsonschema = "^4.21.1"
 
+[tool.poetry.group.dev.dependencies]
+black = "^24.1.1"
+flake8 = "^7.0.0"
+pytest = "^8.0.0"
+coverage = "^7.4.1"
 
 [build-system]
 requires = ["poetry-core"]
