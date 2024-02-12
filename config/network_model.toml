@@ -1,0 +1,24 @@
+model-name = "Example"
+
+[Entities]
+
+[Entities.Alice]
+type = tcp
+ip = 10.0.0.1
+port = 8080
+
+[Entities.Bob]
+type = tcp
+ip = 10.0.0.2
+port = 8081
+
+[Sessions]
+[Sessions.example1]
+template = custom
+1 = Alice->Bob: Hello
+2 = Bob->Alice: Hi
+
+[Sessions.example2]
+template = loop
+times = 5
+1 = Alice->Bob: "$times$"
