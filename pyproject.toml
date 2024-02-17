@@ -1,14 +1,16 @@
 [tool.poetry]
-name = "network-model"
+name = "network_model"
 version = "0.1.0"
 description = ""
 authors = ["yuvaldd9 <yuvaldd9@gmail.com>"]
 readme = "README.md"
+packages = [{include = "network_model", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
 scapy = "^2.5.0"
 jsonschema = "^4.21.1"
+dataconf = "^2.5.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.1.1"

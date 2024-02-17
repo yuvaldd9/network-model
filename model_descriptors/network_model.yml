@@ -1,0 +1,27 @@
+name: "Example Model Descriptor"
+entities:
+  -
+      name: Alice
+      layer: 4
+      hw_address: ""
+      ip: 10.0.0.1
+      port: 8080
+  -
+      name: Bob
+      layer: 4
+      hw_address: ""
+      ip: 10.0.0.2
+      port: 8081
+
+sessions:
+  -
+      session_name: example1
+      interface: eth0
+      template: "custom"
+      entities: 
+        - Alice
+        - Bob
+      messages:
+        - "Alice->Bob | Hello"
+        - "Bob->Alice | Hi"
+
