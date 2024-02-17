@@ -1,6 +1,6 @@
-from datatypes import Message
 from scapy.all import Ether
 
+from ..datatypes import Message
 from .base_entity import BaseNetworkEntity
 
 
@@ -10,10 +10,10 @@ class EthernetEntity(BaseNetworkEntity):
         self.hw_address = hw_address
 
     def _generate_base_packet(self) -> None:
-        self.base_packet = Ether(src=self.hw_address)
+        self._base_packet = Ether(src=self.hw_address)
 
     def _generate_packet(self, message_details: Message):
-        packet = self.base_packet.copy()
+        packet = self._base_packet.copy()
         packet[Ether].dst = message_details.hw_address
         return packet
 
