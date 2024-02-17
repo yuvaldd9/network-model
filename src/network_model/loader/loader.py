@@ -13,6 +13,5 @@ class Loader:
     def load(self) -> ModelDescriptor:
         try:
             return dataconf.file(self.config_file, ModelDescriptor)
-        except:
-            # TODO: Better error messafe
-            raise ValueError("Bad model file")
+        except Exception as e:
+            raise ValueError(e)
