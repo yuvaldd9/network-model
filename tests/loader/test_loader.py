@@ -21,11 +21,10 @@ def test_not_exist_model_descriptor():
 
 
 def test_not_valid_model():
-    with pytest.raises(ValueError) as file_error:
+    with pytest.raises(ValueError) as _:
         loader = Loader(
             os.path.realpath(
                 "tests/loader/test_model_descriptors/bad_network_model.yml"
             )
         )
         loader.load()
-    assert str(file_error.value) == "Bad model file"

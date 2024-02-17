@@ -3,13 +3,13 @@ entities:
   -
       name: Alice
       layer: 4
-      hw_address: ""
+      hw_address: "AA:AA:AA:AA:AA:AA"
       ip: 10.0.0.1
       port: 8080
   -
       name: Bob
       layer: 4
-      hw_address: ""
+      hw_address: "BB:BB:BB:BB:BB:BB"
       ip: 10.0.0.2
       port: 8081
 
