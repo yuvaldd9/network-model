@@ -1,7 +1,12 @@
 import pytest
 
 from network_model.datatypes import Message
-from network_model.network_entities import EthernetEntity, IPEntity, TCPEntity, UDPEntity
+from network_model.network_entities import (
+    EthernetEntity,
+    IPEntity,
+    TCPEntity,
+    UDPEntity,
+)
 
 
 @pytest.fixture

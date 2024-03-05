@@ -1,6 +1,11 @@
 from scapy.all import Ether, IP, TCP, UDP
 
-from network_model.network_entities import EthernetEntity, IPEntity, TCPEntity, UDPEntity
+from network_model.network_entities import (
+    EthernetEntity,
+    IPEntity,
+    TCPEntity,
+    UDPEntity,
+)
 
 
 def test_ethernet_entity_sanity():
@@ -41,7 +46,9 @@ def test_tcp_entity_sanity():
 
 def test_tcp_entity_base_packet(tcp_entity):
     tcp_entity._generate_base_packet()
-    assert tcp_entity._base_packet == Ether(src="AA:BB:CC:DD:EE:FF") / IP(src="1.1.1.1") / TCP(sport=5555)
+    assert tcp_entity._base_packet == Ether(src="AA:BB:CC:DD:EE:FF") / IP(
+        src="1.1.1.1"
+    ) / TCP(sport=5555)
 
 
 def test_tcp_entity_send_packet_fields(tcp_entity, basic_message):
@@ -58,7 +65,9 @@ def test_udp_entity_sanity():
 
 def test_udp_entity_base_packet(udp_entity):
     udp_entity._generate_base_packet()
-    assert udp_entity._base_packet == Ether(src="AA:BB:CC:DD:EE:FF") / IP(src="1.1.1.1") / UDP(sport=5555)
+    assert udp_entity._base_packet == Ether(src="AA:BB:CC:DD:EE:FF") / IP(
+        src="1.1.1.1"
+    ) / UDP(sport=5555)
 
 
 def test_udp_entity_send_packet_fields(udp_entity, basic_message):
