@@ -1,9 +1,0 @@
-name: "Example Model Descriptor"
-entities:
-  -
-      name: Alice
-
-session:
-  -
-      session_name: example1
-      interface: eth0

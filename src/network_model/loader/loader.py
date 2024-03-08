@@ -1,14 +1,38 @@
+import re
 import os
 import dataconf
 
-from typing import Optional
-from ..datatypes import ModelDescriptor
+from dataclasses import asdict
+from typing import List, Dict, Optional
+
+from ..handlers import ModelHandler
+from ..datatypes import ModelDescriptor, Session, Message
+from ..network_entities import (
+    BaseNetworkEntity,
+    EthernetEntity,
+    IPEntity,
+    TCPEntity,
+    UDPEntity,
+)
+
+
+# Parsing Consts
+MESSAGE_PATTERN_REGEX = r"^(.*?)->(.*?) \| (.*)$"
+BAD_MESSAGE_DESCRIPTION = (
+    "Message are not described accroding to the format Sender->Receiver | Data"
+)
+
+ENTITIES_BY_PROTOCOL: Dict[str, BaseNetworkEntity] = {
+    "ether": EthernetEntity,
+    "ip": IPEntity,
+    "tcp": TCPEntity,
+    "udp": UDPEntity,
+}
 
 
 class Loader:
-    def __init__(self, descriptor_file: str):
+    def __init__(self, descriptor_file: str) -> None:
         self._check_descriptor(descriptor_file)
-
         self.descriptor_file: str = descriptor_file
 
     def _check_descriptor(self, descriptor_path: str) -> bool:
@@ -17,20 +41,65 @@ class Loader:
         Return True if file is valid, else Raise Value Error
         """
 
-        if not os.path.isfile(descriptor_path):
+        if not os.path.exists(descriptor_path):
             raise ValueError(f"Model descriptor file {descriptor_path} does not exists")
 
         return True
 
-    def load(self, new_descriptor: Optional[str] = None) -> ModelDescriptor:
-        return self._load(
+    def load(self, new_descriptor: Optional[str] = None) -> ModelHandler:
+        model_descriptor = self._load(
             new_descriptor
             if new_descriptor and self._check_descriptor(new_descriptor)
             else self.descriptor_file
         )
 
+        return self._parse_model(model_descriptor)
+
+    def _parse_model(self, model_descriptor: ModelDescriptor) -> ModelHandler:
+        """Parse the ModelDescriptor to ModelHandler"""
+
+        # Entities
+        model_entities = {
+            entity.name: ENTITIES_BY_PROTOCOL[entity.protocol](entity)
+            for entity in model_descriptor.entities
+        }
+
+        # Sessions
+        model_sessions: List[Session] = []
+        for session in model_descriptor.sessions:
+            model_sessions.append(
+                Session(
+                    session.session_name,
+                    session.template,
+                    self._parse_messages(model_entities, session.messages),
+                    session.next_session_delay,
+                )
+            )
+
+        return ModelHandler(model_entities, model_sessions)
+
+    def _parse_messages(
+        self, entities: Dict[str, BaseNetworkEntity], message_descriptions: List[str]
+    ) -> List[Message]:
+        messages: List[Message] = []
+
+        for message in message_descriptions:
+            match = re.match(MESSAGE_PATTERN_REGEX, message)
+            if match:
+                sender, receiver, data = match.group(1), match.group(2), match.group(3)
+                messages.append(
+                    Message(
+                        sender_name=sender,
+                        hw_address=entities[receiver].hw_address,
+                        ip_address=entities[receiver].ip_address,
+                        port=entities[receiver].port,
+                        data=data,
+                    )
+                )
+            else:
+                raise ValueError(BAD_MESSAGE_DESCRIPTION)
+
+        return messages
+
     def _load(self, descriptor_file: str) -> ModelDescriptor:
-        try:
-            return dataconf.file(descriptor_file, ModelDescriptor)
-        except Exception as e:
-            raise ValueError(e)
+        return dataconf.file(descriptor_file, ModelDescriptor)

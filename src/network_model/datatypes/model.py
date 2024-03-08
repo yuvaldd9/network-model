@@ -8,5 +8,6 @@ from dataclasses import dataclass
 @dataclass
 class ModelDescriptor:
     name: str
+    interface: str
     entities: List[EntityDescriptor]
     sessions: List[SessionDescriptor]

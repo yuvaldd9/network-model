@@ -20,5 +20,5 @@ sessions:
       session_name: example1
       template: "custom"
       messages:
-        - "Alice->Bob | Hello"
-        - "Bob->Alice | Hi"
+        - "Alice->Bob | Another"
+        - "Bob->Alice | One"

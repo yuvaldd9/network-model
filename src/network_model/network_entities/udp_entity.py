@@ -1,13 +1,14 @@
 from scapy.all import Ether, IP, UDP
 
+from network_model.datatypes.entity import EntityDescriptor
+
 from ..datatypes import Message
 from .ip_entity import IPEntity
 
 
 class UDPEntity(IPEntity):
-    def __init__(self, name: str, hw_address: str, ip_address: str, port: int) -> None:
-        super().__init__(name, hw_address, ip_address)
-        self.port = port
+    def __init__(self, entity_descriptor: EntityDescriptor) -> None:
+        super().__init__(entity_descriptor)
 
     def _generate_base_packet(self) -> None:
         self._base_packet = (

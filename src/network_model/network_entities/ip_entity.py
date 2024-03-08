@@ -1,13 +1,12 @@
 from scapy.all import Ether, IP
 
-from ..datatypes import Message
+from ..datatypes import Message, EntityDescriptor
 from .ethernet_entity import EthernetEntity
 
 
 class IPEntity(EthernetEntity):
-    def __init__(self, name: str, hw_address: str, ip_address: str) -> None:
-        super().__init__(name, hw_address)
-        self.ip_address = ip_address
+    def __init__(self, entity_descriptor: EntityDescriptor) -> None:
+        super().__init__(entity_descriptor)
 
     def _generate_base_packet(self) -> None:
         self._base_packet = Ether(src=self.hw_address) / IP(src=self.ip_address)

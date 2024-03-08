@@ -4,7 +4,7 @@ from dataclasses import dataclass
 @dataclass
 class EntityDescriptor:
     name: str
-    layer: int
+    protocol: str
     hw_address: str = ""
     ip: str = ""
     port: int = 0
