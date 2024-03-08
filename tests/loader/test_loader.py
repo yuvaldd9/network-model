@@ -1,14 +1,10 @@
-import os
 import pytest
 
 from network_model.loader import Loader
 
 
-def test_loader_sanity():
-    loader = Loader(
-        os.path.realpath("tests/loader/test_model_descriptors/sanity_network_model.yml")
-    )
-    assert loader
+def test_loader_sanity(valid_model_descriptor_path):
+    assert Loader(valid_model_descriptor_path)
 
 
 def test_not_exist_model_descriptor():
@@ -20,11 +16,8 @@ def test_not_exist_model_descriptor():
     )
 
 
-def test_not_valid_model():
-    with pytest.raises(ValueError) as _:
-        loader = Loader(
-            os.path.realpath(
-                "tests/loader/test_model_descriptors/bad_network_model.yml"
-            )
-        )
-        loader.load()
+def test_load(valid_model_descriptor_path, model_handler_1):
+    loader = Loader(valid_model_descriptor_path)
+    test_model = loader.load()
+    assert test_model.sessions == model_handler_1.sessions
+    assert test_model.entities == model_handler_1.entities

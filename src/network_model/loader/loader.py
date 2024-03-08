@@ -41,7 +41,7 @@ class Loader:
         Return True if file is valid, else Raise Value Error
         """
 
-        if not os.path.isfile(descriptor_path):
+        if not os.path.exists(descriptor_path):
             raise ValueError(f"Model descriptor file {descriptor_path} does not exists")
 
         return True
@@ -60,7 +60,7 @@ class Loader:
 
         # Entities
         model_entities = {
-            entity.name: ENTITIES_BY_PROTOCOL[entity.protocol](asdict(entity))
+            entity.name: ENTITIES_BY_PROTOCOL[entity.protocol](entity)
             for entity in model_descriptor.entities
         }
 
@@ -70,6 +70,7 @@ class Loader:
             model_sessions.append(
                 Session(
                     session.session_name,
+                    session.template,
                     self._parse_messages(model_entities, session.messages),
                     session.next_session_delay,
                 )
@@ -101,7 +102,4 @@ class Loader:
         return messages
 
     def _load(self, descriptor_file: str) -> ModelDescriptor:
-        try:
-            return dataconf.file(descriptor_file, ModelDescriptor)
-        except Exception as e:
-            raise ValueError(e)
+        return dataconf.file(descriptor_file, ModelDescriptor)

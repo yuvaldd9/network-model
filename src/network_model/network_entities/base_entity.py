@@ -16,6 +16,16 @@ class BaseNetworkEntity(ABC):
         self.port: int = entity_descriptor.port
         self._base_packet = None
 
+    def __eq__(self, other: object) -> bool:
+        if isinstance(self, other.__class__):
+            return (
+                self.name == other.name
+                and self.hw_address == other.hw_address
+                and self.ip_address == other.ip_address
+                and self.port == other.port
+            )
+        return False
+
     @abstractmethod
     def _generate_base_packet(self) -> None:
         """
