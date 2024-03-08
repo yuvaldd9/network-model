@@ -14,14 +14,14 @@ from ..network_entities import (
     UDPEntity,
 )
 
-
-# Parsing Consts
-MESSAGE_PATTERN_REGEX = r"^(.*?)->(.*?) \| (.*)$"
+# Error messages
 BAD_MESSAGE_DESCRIPTION = (
     "Message are not described accroding to the format Sender->Receiver | Data"
 )
 NOT_EXISTS_ENTITIES = "Your message description contains not defined network entities"
 
+# Parsing Consts
+MESSAGE_PATTERN_REGEX = r"^(.*?)->(.*?) \| (.*)$"
 ENTITIES_BY_PROTOCOL: Dict[str, BaseNetworkEntity] = {
     "ether": EthernetEntity,
     "ip": IPEntity,

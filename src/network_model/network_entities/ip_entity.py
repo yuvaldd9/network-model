@@ -19,4 +19,4 @@ class IPEntity(EthernetEntity):
 
     def _send(self, packet, times: int = 1) -> None:
         for _ in range(times):
-            self.LAYER_3_SOCKET.send(packet)
+            self.LAYER_2_SOCKET.send(packet)
