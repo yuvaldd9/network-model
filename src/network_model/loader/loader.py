@@ -2,7 +2,6 @@ import re
 import os
 import dataconf
 
-from dataclasses import asdict
 from typing import List, Dict, Optional
 
 from ..handlers import ModelHandler
@@ -21,6 +20,7 @@ MESSAGE_PATTERN_REGEX = r"^(.*?)->(.*?) \| (.*)$"
 BAD_MESSAGE_DESCRIPTION = (
     "Message are not described accroding to the format Sender->Receiver | Data"
 )
+NOT_EXISTS_ENTITIES = "Your message description contains not defined network entities"
 
 ENTITIES_BY_PROTOCOL: Dict[str, BaseNetworkEntity] = {
     "ether": EthernetEntity,
@@ -87,6 +87,11 @@ class Loader:
             match = re.match(MESSAGE_PATTERN_REGEX, message)
             if match:
                 sender, receiver, data = match.group(1), match.group(2), match.group(3)
+
+                # Check if sender and receiver are defined in the model entities
+                if not set([sender, receiver]) <= set(entities.keys()):
+                    raise ValueError(NOT_EXISTS_ENTITIES)
+
                 messages.append(
                     Message(
                         sender_name=sender,
