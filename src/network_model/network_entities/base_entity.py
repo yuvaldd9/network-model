@@ -1,16 +1,19 @@
 from scapy.all import Raw, conf
 from abc import ABC, abstractmethod
 
-from ..datatypes import Message
+from ..datatypes import Message, EntityDescriptor
 
 
 class BaseNetworkEntity(ABC):
     LAYER_2_SOCKET = conf.L2socket()
     LAYER_3_SOCKET = conf.L3socket()
 
-    def __init__(self, name: str) -> None:
+    def __init__(self, entity_descriptor: EntityDescriptor) -> None:
         super().__init__()
-        self.name: str = name
+        self.name: str = entity_descriptor.name
+        self.hw_address: str = entity_descriptor.hw_address
+        self.ip_address: str = entity_descriptor.ip
+        self.port: int = entity_descriptor.port
         self._base_packet = None
 
     @abstractmethod

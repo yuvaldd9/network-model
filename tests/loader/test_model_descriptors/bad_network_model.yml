@@ -1,4 +1,5 @@
 name: "Example Model Descriptor"
+interface: eth0
 entities:
   -
       name: Alice
@@ -6,4 +7,3 @@ entities:
 session:
   -
       session_name: example1
-      interface: eth0

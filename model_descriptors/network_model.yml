@@ -1,14 +1,15 @@
 name: "Example Model Descriptor"
+interface: eth0
 entities:
   -
       name: Alice
-      layer: 4
+      protocol: tcp
       hw_address: "AA:AA:AA:AA:AA:AA"
       ip: 10.0.0.1
       port: 8080
   -
       name: Bob
-      layer: 4
+      protocol: udp
       hw_address: "BB:BB:BB:BB:BB:BB"
       ip: 10.0.0.2
       port: 8081
@@ -16,11 +17,7 @@ entities:
 sessions:
   -
       session_name: example1
-      interface: eth0
       template: "custom"
-      entities: 
-        - Alice
-        - Bob
       messages:
         - "Alice->Bob | Hello"
         - "Bob->Alice | Hi"

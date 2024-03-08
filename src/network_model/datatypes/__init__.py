@@ -1,6 +1,12 @@
 from .messages import Message
 from .model import ModelDescriptor
 from .entity import EntityDescriptor
-from .sesssion import SessionDescriptor
+from .sesssion import SessionDescriptor, Session
 
-__all__ = ["ModelDescriptor", "EntityDescriptor", "Message", "SessionDescriptor"]
+__all__ = [
+    "ModelDescriptor",
+    "EntityDescriptor",
+    "Message",
+    "SessionDescriptor",
+    "Session",
+]

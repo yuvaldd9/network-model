@@ -1,13 +1,14 @@
 from scapy.all import Ether
 
+from network_model.datatypes.entity import EntityDescriptor
+
 from ..datatypes import Message
 from .base_entity import BaseNetworkEntity
 
 
 class EthernetEntity(BaseNetworkEntity):
-    def __init__(self, name: str, hw_address: str) -> None:
-        super().__init__(name)
-        self.hw_address = hw_address
+    def __init__(self, entity_descriptor: EntityDescriptor) -> None:
+        super().__init__(entity_descriptor)
 
     def _generate_base_packet(self) -> None:
         self._base_packet = Ether(src=self.hw_address)
