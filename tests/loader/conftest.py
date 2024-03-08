@@ -20,9 +20,17 @@ def not_valid_model_descriptor_path():
     )
 
 
+@pytest.fixture
 def additional_valid_model_descriptor_path():
     return os.path.realpath(
-        "tests/loader/test_model_descriptors/sanity_network_model.yml"
+        "tests/loader/test_model_descriptors/additional_sanity_network_model.yml"
+    )
+
+
+@pytest.fixture
+def not_valid_messages_model_descriptor_path():
+    return os.path.realpath(
+        "tests/loader/test_model_descriptors/not_valid_messages_network_model.yml"
     )
 
 
@@ -71,3 +79,34 @@ def model_sessions_1():
 @pytest.fixture
 def model_handler_1(model_entities_1, model_sessions_1):
     return ModelHandler(model_entities_1, model_sessions_1)
+
+
+@pytest.fixture
+def model_sessions_2():
+    return [
+        Session(
+            session_name="example1",
+            template="custom",
+            messages=[
+                Message(
+                    sender_name="Alice",
+                    hw_address="",
+                    ip_address="10.0.0.2",
+                    port=8081,
+                    data="Another",
+                ),
+                Message(
+                    sender_name="Bob",
+                    hw_address="",
+                    ip_address="10.0.0.1",
+                    port=8080,
+                    data="One",
+                ),
+            ],
+        )
+    ]
+
+
+@pytest.fixture
+def model_handler_2(model_entities_1, model_sessions_2):
+    return ModelHandler(model_entities_1, model_sessions_2)
