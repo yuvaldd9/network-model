@@ -6,6 +6,9 @@ authors = ["yuvaldd9 <yuvaldd9@gmail.com>"]
 readme = "README.md"
 packages = [{include = "network_model", from = "src"}]
 
+[tool.poetry.scripts]
+network_model = "network_model.network_model:main"
+
 [tool.poetry.dependencies]
 python = "^3.10"
 scapy = "^2.5.0"

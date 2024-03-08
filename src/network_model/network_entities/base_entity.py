@@ -6,7 +6,6 @@ from ..datatypes import Message, EntityDescriptor
 
 class BaseNetworkEntity(ABC):
     LAYER_2_SOCKET = conf.L2socket()
-    LAYER_3_SOCKET = conf.L3socket()
 
     def __init__(self, entity_descriptor: EntityDescriptor) -> None:
         super().__init__()
@@ -69,4 +68,5 @@ class BaseNetworkEntity(ABC):
         packet_to_send = self._generate_packet(message_details) / Raw(
             load=message_details.data
         )
+        print(packet_to_send)
         self._send(packet_to_send, message_details.times)
