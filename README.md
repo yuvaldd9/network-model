@@ -2,6 +2,7 @@
 # Network Model v1.0.0
 
 Welcome to Network Model v1.0.0! This project allows you to model network activity by parsing a configuration file in YAML format and implementing the described network model using Scapy.
+```
 
 ## Installation
 
