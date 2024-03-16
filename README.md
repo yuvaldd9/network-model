@@ -8,7 +8,7 @@ Welcome to Network Model v1.0.0! This project allows you to model network activi
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository_url>
+git clone git@github.com:yuvaldd9/network-model.git
 cd network-model
 ```
 
